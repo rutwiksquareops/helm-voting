@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.name }}
+  labels:
+    app: {{ .Values.metadata.labels.app }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+     app: {{ .Values.metadata.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.metadata.labels.app }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: POSTGRES_USER
+          value: {{ .Values.env.postgresUser }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.env.postgresPassword }}
+        volumeMounts:
+        - mountPath: {{ .Values.volumeMounts.mountPath }}
+          name: {{ .Values.metadata.name }}-data
+        ports:
+        - name: postgres
+          containerPort: 5432
+      volumes:
+      - name: {{ .Values.metadata.name }}-data
+        emptyDir: {}
