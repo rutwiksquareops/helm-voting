@@ -8,7 +8,7 @@ metadata:
     app: worker
   name: worker
 image:
-  repository: ####@@@@@@
+  repository: rutwiksquareops/vote-app-worker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "6"
