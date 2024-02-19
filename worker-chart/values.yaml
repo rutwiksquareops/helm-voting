@@ -11,7 +11,7 @@ image:
   repository: rutwiksquareops/vote-app-worker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "4"
+  tag: "13"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
